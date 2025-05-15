@@ -2,6 +2,8 @@
 
 A Vercel adapter for the Model Context Protocol (MCP), enabling real-time communication between your applications and AI models. Currently supports Next.js with more framework adapters coming soon.
 
+Currently uses `**@modelcontextprotocol/sdk@1.10.2**`
+
 ## Installation
 
 ```bash
@@ -18,15 +20,18 @@ pnpm add @vercel/mcp-adapter
 
 ```typescript
 // app/api/[transport]/route.ts
-import createMcpHandler from '@vercel/mcp-adapter/next';
+import { createMcpHandler } from '@vercel/mcp-adapter';
 const handler = createMcpHandler(
   server => {
     server.tool(
-      'add number',
-      'add number',
-      { a: z.number(), b: z.number() },
-      async ({ a, b }) => {
-        return { content: [{ type: 'text', text: `hello world ${a + b}` }] };
+      'roll_dice',
+      'Rolls an N-sided die',
+      { sides: z.number().int().min(2) },
+      async ({ sides }) => {
+        const value = 1 + Math.floor(Math.random() * sides);
+        return {
+          content: [{ type: 'text', text: `🎲 You rolled a ${value}!` }],
+        };
       }
     );
   },
@@ -36,24 +41,25 @@ const handler = createMcpHandler(
   {
     // Optional configuration
     redisUrl: process.env.REDIS_URL,
-    streamableHttpEndpoint: '/mcp',
-    sseEndpoint: '/sse',
+    // Set the basePath to where the handler is to automatically derive all endpoints
+    // This base path is for if this snippet is located at: /app/api/[transport]/route.ts
+    basePath: '/api',
     maxDuration: 60,
     verboseLogs: true,
   }
 );
-
 export { handler as GET, handler as POST };
 ```
 
-2. Use the MCP client in your application:
+1. Use the MCP client in your application:
 
 ```typescript
 // app/components/YourComponent.tsx
 import { McpClient } from '@modelcontextprotocol/sdk/client';
 
 const client = new McpClient({
-  transport: new SSEClientTransport('/api/sse'),
+  // When using basePath, the SSE endpoint will be automatically derived
+  transport: new SSEClientTransport('/api/mcp/sse'),
 });
 
 // Use the client to make requests
@@ -67,9 +73,15 @@ The `initializeMcpApiHandler` function accepts the following configuration optio
 ```typescript
 interface Config {
   redisUrl?: string; // Redis connection URL for pub/sub
+  basePath?: string; // string; // Base path for MCP endpoints
+  // @deprecated use 'basePath' instead
   streamableHttpEndpoint?: string; // Endpoint for streamable HTTP transport
+  // @deprecated use 'basePath' instead
   sseEndpoint?: string; // Endpoint for SSE transport
+  // @deprecated use 'basePath' instead
+  sseMessageEndpoint?: string; // Endpoint for SSE message transport
   maxDuration?: number; // Maximum duration for SSE connections in seconds
+  verboseLogs?: boolean; // Log debugging information
 }
 ```
 
