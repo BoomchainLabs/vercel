@@ -1,5 +1,21 @@
 # @vercel/functions
 
+## 2.1.0
+
+### Minor Changes
+
+- Change the load order of the OIDC token ([#13337](https://github.com/vercel/vercel/pull/13337))
+
+### Patch Changes
+
+- Rename getRuntimeCache to getCache ([#13325](https://github.com/vercel/vercel/pull/13325))
+
+## 2.0.3
+
+### Patch Changes
+
+- Rename FunctionCache / getFunctionCache to RuntimeCache / getRuntimeCache ([#13296](https://github.com/vercel/vercel/pull/13296))
+
 ## 2.0.2
 
 ### Patch Changes
