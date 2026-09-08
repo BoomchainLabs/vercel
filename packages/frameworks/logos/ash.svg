@@ -1,9 +1,1 @@
-<?xml version="1.0" encoding="utf-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" role="img" aria-label="Ash">
-  <title>Ash</title>
-  <rect width="48" height="48" rx="8" fill="#000"/>
-  <text x="24" y="24" fill="#fff"
-        font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif"
-        font-size="14" font-weight="700" letter-spacing="1"
-        text-anchor="middle" dominant-baseline="central">ASH</text>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" aria-label="Ash" role="img" viewBox="0 0 48 48"><title>Ash</title><rect width="48" height="48" fill="#000" rx="8"/><text x="24" y="24" fill="#fff" dominant-baseline="central" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" font-size="14" font-weight="700" letter-spacing="1" text-anchor="middle">ASH</text></svg>
